@@ -3,7 +3,7 @@
 #include <iostream>
 // test area information
 #define x_length 2000.0f
-#define y_length 1500.0f
+#define y_length 150000.0f
 #define z_length 2000.0f
 #define thickness 10.0f
 #define ticks_per_second (480.0f)
