@@ -1,5 +1,5 @@
 #include "utils.h"
-rp3d::RigidBody *CreatClosedTestArea(const rp3d::Vector3 &position, const rp3d::Vector3 &size, rp3d::PhysicsWorld *world, rp3d::PhysicsCommon &engine)
+rp3d::RigidBody *CreateClosedTestArea(const rp3d::Vector3 &position, const rp3d::Vector3 &size, rp3d::PhysicsWorld *world, rp3d::PhysicsCommon &engine)
 {
     auto haulfSize = size / 2.0;
     rp3d::Transform transform(position, rp3d::Quaternion::identity());
@@ -21,4 +21,32 @@ rp3d::RigidBody *CreatClosedTestArea(const rp3d::Vector3 &position, const rp3d::
     final->addCollider(front_back_shape, back_shape_transform);
     final->setType(rp3d::BodyType::STATIC);
     return final;
+}
+vector<rp3d::RigidBody *> FillWithbodis(const rp3d::Vector3 &position, const rp3d::Vector3 &dist, int x_num, int y_num, int z_num, rp3d::PhysicsWorld *world)
+{
+    vector<rp3d::RigidBody *> final;
+    final.reserve(x_num * y_num * z_num);
+    int i, j, k;
+    rp3d::Transform transform(position, rp3d::Quaternion::identity());
+    for (i = 0; i < x_num; i++)
+    {
+        for (j = 0; j < y_num; j++)
+        {
+            for (k = 0; k < z_num; k++)
+            {
+                transform.setPosition(position + rp3d::Vector3(i * dist.x, j * dist.y, k * dist.z));
+                final.emplace_back(world->createRigidBody(transform));
+            }
+        }
+    }
+    return final;
+}
+void set_to_sphere(const vector<rp3d::RigidBody *> &bodis, float radius, rp3d::PhysicsCommon &engine)
+{
+    rp3d::SphereShape *shape=engine.createSphereShape(radius);
+    rp3d::Transform transform(rp3d::Vector3::zero(), rp3d::Quaternion::identity());
+    for(auto &it: bodis)
+    {
+        it->addCollider(shape, transform);
+    }
 }
