@@ -38,3 +38,11 @@ vector<rp3d::RigidBody *> FillWithBodies(const rp3d::Vector3 &position, const rp
  * @param engine The PhysicsCommon object.
  */
 void set_to_sphere(const vector<rp3d::RigidBody *> &bodies, float radius, rp3d::PhysicsCommon &engine);
+/**
+ * Add box colliders to a vector of bodies.
+ *
+ * @param bodies A vector containing pointers to the bodies.
+ * @param haulf_size Haulf the dimentions of the box to use for all bodies.
+ * @param engine The PhysicsCommon object.
+ */
+void set_to_box(const vector<rp3d::RigidBody *> &bodies, rp3d::Vector3 haulf_size, rp3d::PhysicsCommon &engine);

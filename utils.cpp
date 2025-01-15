@@ -41,12 +41,17 @@ vector<rp3d::RigidBody *> FillWithBodies(const rp3d::Vector3 &position, const rp
     }
     return final;
 }
-void set_to_sphere(const vector<rp3d::RigidBody *> &bodis, float radius, rp3d::PhysicsCommon &engine)
+void set_to_sphere(const vector<rp3d::RigidBody *> &bodies, float radius, rp3d::PhysicsCommon &engine)
 {
-    rp3d::SphereShape *shape=engine.createSphereShape(radius);
+    rp3d::SphereShape *shape = engine.createSphereShape(radius);
     rp3d::Transform transform(rp3d::Vector3::zero(), rp3d::Quaternion::identity());
-    for(auto &it: bodis)
-    {
+    for (auto &it : bodies)
         it->addCollider(shape, transform);
-    }
+}
+void set_to_box(const vector<rp3d::RigidBody *> &bodies, rp3d::Vector3 haulf_size, rp3d::PhysicsCommon &engine)
+{
+    rp3d::BoxShape *shape = engine.createBoxShape(haulf_size);
+    rp3d::Transform transform(rp3d::Vector3::zero(), rp3d::Quaternion::identity());
+    for (auto &it : bodies)
+        it->addCollider(shape, transform);
 }
