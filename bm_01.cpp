@@ -26,8 +26,10 @@ int main()
     auto area1 = CreateClosedTestArea({-4500, 0, 0}, {1000, 150000, 1000}, w, engine);
     area1->setType(rp3d::BodyType::KINEMATIC);
     area1->setLinearVelocity({0.0f, 0.0f, 40.0f});
-    auto bodis1 = FillWithbodis({-4980, 20, -480}, {40, 40, 40}, 50, 1, 50, w);
-    set_to_sphere(bodis1, 20, engine);
-    std::cout << "I have created " << bodis1.size() << " bodis" << std::endl;
+    auto bodies1 = FillWithBodies({-4980, 20, -480}, {40, 40, 40}, 50, 1, 50, w);
+    set_to_sphere(bodies1, 20, engine);
+    std::vector<rp3d::RigidBody *> bodies;
+    bodies.insert(bodies.end(), bodies1.begin(), bodies1.end());
+    std::cout << "I have created " << bodies.size() << " bodies" << std::endl;
     run_simulation(w, 50);
 }

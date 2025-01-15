@@ -29,7 +29,7 @@ rp3d::RigidBody *CreateClosedTestArea(const rp3d::Vector3 &position, const rp3d:
  *
  * @return A vector containing pointers to all created bodies.
  */
-vector<rp3d::RigidBody *> FillWithbodies(const rp3d::Vector3 &position, const rp3d::Vector3 &dist, int x_num, int y_num, int z_num, rp3d::PhysicsWorld *world);
+vector<rp3d::RigidBody *> FillWithBodies(const rp3d::Vector3 &position, const rp3d::Vector3 &dist, int x_num, int y_num, int z_num, rp3d::PhysicsWorld *world);
 /**
  * Add sphere colliders to a vector of bodies.
  *

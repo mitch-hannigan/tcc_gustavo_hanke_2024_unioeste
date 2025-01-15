@@ -22,7 +22,7 @@ rp3d::RigidBody *CreateClosedTestArea(const rp3d::Vector3 &position, const rp3d:
     final->setType(rp3d::BodyType::STATIC);
     return final;
 }
-vector<rp3d::RigidBody *> FillWithbodis(const rp3d::Vector3 &position, const rp3d::Vector3 &dist, int x_num, int y_num, int z_num, rp3d::PhysicsWorld *world)
+vector<rp3d::RigidBody *> FillWithBodies(const rp3d::Vector3 &position, const rp3d::Vector3 &dist, int x_num, int y_num, int z_num, rp3d::PhysicsWorld *world)
 {
     vector<rp3d::RigidBody *> final;
     final.reserve(x_num * y_num * z_num);
