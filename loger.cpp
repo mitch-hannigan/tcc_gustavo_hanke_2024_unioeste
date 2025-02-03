@@ -2,12 +2,16 @@
 #include <stdio.h>
 loger::loger(const char *filename) : filename(filename)
 {
+    if (filename)
+    {
+        fclose(fopen64(filename, "w"));
+    }
 }
 void loger::write()
 {
     if (filename)
     {
-        FILE *f = fopen64(filename, "w");
+        FILE *f = fopen64(filename, "a");
         fwrite(log.data(), 1, log.size(), f);
         fclose(f);
     }
@@ -24,4 +28,12 @@ void loger::add_iteraction(std::vector<rp3d::RigidBody *> &bodies)
         for (int i = 0; i < sizeof(o); i++)
             log.push_back(((char *)(&o))[i]);
     }
+    if (log.size() > 1024 * 1024 * 1024) // 1 gb
+        if (filename)
+        {
+            FILE *f = fopen64(filename, "a");
+            fwrite(log.data(), 1, log.size(), f);
+            fclose(f);
+            log.clear();
+        }
 }

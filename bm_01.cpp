@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     bodies.insert(bodies.end(), bodies3_1.begin(), bodies3_1.end());
     bodies.insert(bodies.end(), bodies3_2.begin(), bodies3_2.end());
     std::cout << "I have created " << bodies.size() << " bodies" << std::endl;
-    run_simulation(w, tick_period * 48);
+    run_simulation(w, 100);
     l->write();
     delete l;
     std::cout << "sizeof: " << sizeof(rp3d::decimal) << std::endl;
