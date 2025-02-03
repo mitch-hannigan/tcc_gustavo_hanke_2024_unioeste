@@ -1,20 +1,27 @@
 #include "loger.h"
-#include <sstream>
+#include <stdio.h>
+loger::loger(const char *filename) : filename(filename)
+{
+}
 void loger::write()
 {
-    for (auto &line : log)
+    if (filename)
     {
-        std::cout << line << std::endl;
+        FILE *f = fopen64(filename, "w");
+        fwrite(log.data(), 1, log.size(), f);
+        fclose(f);
     }
 }
 void loger::add_iteraction(std::vector<rp3d::RigidBody *> &bodies)
 {
-    std::stringstream str;
-    //str.precision(6);
+    log.reserve(log.size() + sizeof(rp3d::decimal) * 7); // 7 elementos numericos
     for (auto &body : bodies)
     {
         rp3d::Vector3 p = body->getTransform().getPosition();
-        str << p.x << "\t" << p.y << "\t" << p.z << "\t";
+        rp3d::Quaternion o = body->getTransform().getOrientation();
+        for (int i = 0; i < sizeof(p); i++)
+            log.push_back(((char *)(&p))[i]);
+        for (int i = 0; i < sizeof(o); i++)
+            log.push_back(((char *)(&o))[i]);
     }
-    log.push_back(str.str());
 }

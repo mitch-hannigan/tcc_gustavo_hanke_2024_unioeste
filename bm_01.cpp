@@ -9,7 +9,7 @@
 #define ticks_to_simulate(time) (ceil((time) / (tick_period)))
 namespace rp3d = reactphysics3d;
 std::vector<rp3d::RigidBody *> bodies;
-loger l;
+loger *l;
 rp3d::decimal time_step = tick_period;
 void run_simulation(rp3d::PhysicsWorld *w, rp3d::decimal simulate_time)
 {
@@ -17,12 +17,17 @@ void run_simulation(rp3d::PhysicsWorld *w, rp3d::decimal simulate_time)
     for (int t = 0; t < ticks; t++)
     {
         w->update(tick_period);
-        l.add_iteraction(bodies);
+        if (l)
+            l->add_iteraction(bodies);
     }
     std::cout << "done, I have just run " << ticks << " ticks." << std::endl;
 }
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc == 1)
+        l = new loger;
+    else
+        l = new loger(argv[1]);
     // engine initialization.
     rp3d::PhysicsCommon engine;
     rp3d::PhysicsWorld *w = engine.createPhysicsWorld();
@@ -47,6 +52,8 @@ int main()
     bodies.insert(bodies.end(), bodies3_1.begin(), bodies3_1.end());
     bodies.insert(bodies.end(), bodies3_2.begin(), bodies3_2.end());
     std::cout << "I have created " << bodies.size() << " bodies" << std::endl;
-    run_simulation(w, tick_period*4800);
-    l.write();
+    run_simulation(w, tick_period * 48);
+    l->write();
+    delete l;
+    std::cout << "sizeof: " << sizeof(rp3d::decimal) << std::endl;
 }
