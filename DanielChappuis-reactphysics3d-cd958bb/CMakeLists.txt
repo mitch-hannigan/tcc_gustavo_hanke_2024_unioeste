@@ -263,6 +263,7 @@ if(RP3D_COMPILE_LIBRARY)
 
 	# C++11 compiler features
 	target_compile_features(reactphysics3d PUBLIC cxx_std_17)
+	target_compile_options(reactphysics3d PUBLIC -mavx2)
 	set_target_properties(reactphysics3d PROPERTIES CXX_EXTENSIONS OFF)
 
 	# Library headers
