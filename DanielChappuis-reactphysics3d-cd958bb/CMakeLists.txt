@@ -263,7 +263,7 @@ if(RP3D_COMPILE_LIBRARY)
 	# to refer to "reactphysics3d" in subsequent commands
 	add_library(ReactPhysics3D::reactphysics3d ALIAS reactphysics3d)
 	if(OpenMP_CXX_FOUND)
-    	target_compile_options(reactphysics3d PUBLIC ${OpenMP_CXX_FLAGS})
+    	target_compile_options(reactphysics3d PUBLIC ${OpenMP_CXX_FLAGS} -mavx2)
     	target_link_options(reactphysics3d PUBLIC ${OpenMP_CXX_FLAGS})
 	endif()
 	# C++11 compiler features
