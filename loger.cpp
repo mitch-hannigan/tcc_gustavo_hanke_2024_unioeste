@@ -23,7 +23,7 @@ void loger::add_iteraction(std::vector<rp3d::RigidBody *> &bodies)
     {
         rp3d::Vector3 p = body->getTransform().getPosition();
         rp3d::Quaternion o = body->getTransform().getOrientation();
-        for (int i = 0; i < sizeof(p); i++)
+        for (int i = 0; i < sizeof(rp3d::decimal)*3; i++)
             log.push_back(((char *)(&p))[i]);
         for (int i = 0; i < sizeof(o); i++)
             log.push_back(((char *)(&o))[i]);
