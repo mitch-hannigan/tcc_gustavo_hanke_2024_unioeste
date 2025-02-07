@@ -186,13 +186,13 @@ namespace reactphysics3d
     // Set the vector to zero
     RP3D_FORCE_INLINE void Vector3::setToZero()
     {
-        _mm_storeu_ps((float *)(this), _mm_set1_ps(0.0f));
+        _mm_store_ps((float *)(this), _mm_set1_ps(0.0f));
     }
 
     // Set all the values of the vector
     RP3D_FORCE_INLINE void Vector3::setAllValues(decimal newX, decimal newY, decimal newZ)
     {
-        _mm_storeu_ps((float *)(this), _mm_set_ps(0.0f, newZ, newY, newX));
+        _mm_store_ps((float *)(this), _mm_set_ps(0.0f, newZ, newY, newX));
     }
 
     // Return the length of the vector
@@ -204,7 +204,7 @@ namespace reactphysics3d
     // Return the square of the length of the vector
     RP3D_FORCE_INLINE decimal Vector3::lengthSquare() const
     {
-        __m128 v = _mm_loadu_ps((const float *)this);
+        __m128 v = _mm_load_ps((const float *)this);
         v = _mm_dp_ps(v, v, 0x71);
         return _mm_cvtss_f32(v);
     }
@@ -212,8 +212,8 @@ namespace reactphysics3d
     // Scalar product of two vectors (RP3D_FORCE_INLINE)
     RP3D_FORCE_INLINE decimal Vector3::dot(const Vector3 &vector) const
     {
-        __m128 v1 = _mm_loadu_ps((const float *)this);
-        __m128 v2 = _mm_loadu_ps((const float *)(&vector));
+        __m128 v1 = _mm_load_ps((const float *)this);
+        __m128 v2 = _mm_load_ps((const float *)(&vector));
         return _mm_cvtss_f32(_mm_dp_ps(v1, v2, 0x71));
     }
 
@@ -221,15 +221,15 @@ namespace reactphysics3d
     RP3D_FORCE_INLINE Vector3 Vector3::cross(const Vector3 &vector) const
     {
         Vector3 final;
-        __m128 v1 = _mm_loadu_ps((const float *)this);
-        __m128 v2 = _mm_loadu_ps((const float *)(&vector));
+        __m128 v1 = _mm_load_ps((const float *)this);
+        __m128 v2 = _mm_load_ps((const float *)(&vector));
         __m128 l1 = _mm_shuffle_ps(v2, v2, _MM_SHUFFLE(3, 1, 0, 2));
         __m128 l2 = _mm_shuffle_ps(v1, v1, _MM_SHUFFLE(3, 1, 0, 2));
         l1 = _mm_mul_ps(l1, v1);
         l2 = _mm_mul_ps(l2, v2);
         l1 = _mm_sub_ps(l2, l1);
         l1 = _mm_shuffle_ps(l1, l1, _MM_SHUFFLE(3, 1, 0, 2));
-        _mm_storeu_ps((float *)&final, l1);
+        _mm_store_ps((float *)&final, l1);
         return final;
     }
 
@@ -241,18 +241,18 @@ namespace reactphysics3d
         {
             return;
         }
-        __m128 v = _mm_loadu_ps((const float *)this);
+        __m128 v = _mm_load_ps((const float *)this);
         v = _mm_div_ps(v, _mm_set_ps(1.0, l, l, l));
-        _mm_storeu_ps(&x, v);
+        _mm_store_ps(&x, v);
     }
 
     // Return the corresponding absolute value vector
     RP3D_FORCE_INLINE Vector3 Vector3::getAbsoluteVector() const
     {
         Vector3 final;
-        __m128 a = _mm_loadu_ps((const float *)this);
+        __m128 a = _mm_load_ps((const float *)this);
         __m128 m = _mm_castsi128_ps(_mm_set1_epi32(0x7FFFFFFF)); // 0x7fffffff is first bit to 0, all remaining to 1.
-        _mm_storeu_ps((float *)&final, _mm_and_ps(a, m));
+        _mm_store_ps((float *)&final, _mm_and_ps(a, m));
         return final;
     }
 
@@ -289,8 +289,8 @@ namespace reactphysics3d
     // Overloaded operator for the equality condition
     RP3D_FORCE_INLINE bool Vector3::operator==(const Vector3 &vector) const
     {
-        __m128 a = _mm_loadu_ps(&x);
-        __m128 b = _mm_loadu_ps((const float *)&vector);
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps((const float *)&vector);
         return (_mm_movemask_ps(_mm_cmpeq_ps(a, b)) & 0x7) == 0x7;
     }
 
@@ -303,27 +303,27 @@ namespace reactphysics3d
     // Overloaded operator for addition with assignment
     RP3D_FORCE_INLINE Vector3 &Vector3::operator+=(const Vector3 &vector)
     {
-        __m128 a = _mm_loadu_ps(&x);
-        __m128 b = _mm_loadu_ps((const float *)&vector);
-        _mm_storeu_ps(&x, _mm_add_ps(a, b));
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps((const float *)&vector);
+        _mm_store_ps(&x, _mm_add_ps(a, b));
         return *this;
     }
 
     // Overloaded operator for substraction with assignment
     RP3D_FORCE_INLINE Vector3 &Vector3::operator-=(const Vector3 &vector)
     {
-        __m128 a = _mm_loadu_ps(&x);
-        __m128 b = _mm_loadu_ps((const float *)&vector);
-        _mm_storeu_ps(&x, _mm_sub_ps(a, b));
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps((const float *)&vector);
+        _mm_store_ps(&x, _mm_sub_ps(a, b));
         return *this;
     }
 
     // Overloaded operator for multiplication with a number with assignment
     RP3D_FORCE_INLINE Vector3 &Vector3::operator*=(decimal number)
     {
-        __m128 a = _mm_loadu_ps(&x);
+        __m128 a = _mm_load_ps(&x);
         __m128 b = _mm_set1_ps(number);
-        _mm_storeu_ps(&x, _mm_mul_ps(a, b));
+        _mm_store_ps(&x, _mm_mul_ps(a, b));
         return *this;
     }
 
@@ -331,9 +331,9 @@ namespace reactphysics3d
     RP3D_FORCE_INLINE Vector3 &Vector3::operator/=(decimal number)
     {
         assert(number > std::numeric_limits<decimal>::epsilon());
-        __m128 a = _mm_loadu_ps(&x);
+        __m128 a = _mm_load_ps(&x);
         __m128 b = _mm_set1_ps(number);
-        _mm_storeu_ps(&x, _mm_div_ps(a, b));
+        _mm_store_ps(&x, _mm_div_ps(a, b));
         return *this;
     }
 
@@ -387,9 +387,9 @@ namespace reactphysics3d
         assert(vector2.y > MACHINE_EPSILON);
         assert(vector2.z > MACHINE_EPSILON);
         Vector3 final;
-        __m128 a = _mm_loadu_ps((const float *)&vector1);
-        __m128 b = _mm_loadu_ps((const float *)&vector2);
-        _mm_storeu_ps((float *)&final, _mm_div_ps(a, b));
+        __m128 a = _mm_load_ps((const float *)&vector1);
+        __m128 b = _mm_load_ps((const float *)&vector2);
+        _mm_store_ps((float *)&final, _mm_div_ps(a, b));
         final.w = 0.0f;
         return final;
     }
@@ -404,9 +404,9 @@ namespace reactphysics3d
     RP3D_FORCE_INLINE Vector3 operator*(const Vector3 &vector1, const Vector3 &vector2)
     {
         Vector3 final;
-        __m128 a = _mm_loadu_ps((const float *)&vector1);
-        __m128 b = _mm_loadu_ps((const float *)&vector2);
-        _mm_storeu_ps((float *)&final, _mm_mul_ps(a, b));
+        __m128 a = _mm_load_ps((const float *)&vector1);
+        __m128 b = _mm_load_ps((const float *)&vector2);
+        _mm_store_ps((float *)&final, _mm_mul_ps(a, b));
         return final;
     }
 
@@ -420,9 +420,9 @@ namespace reactphysics3d
     RP3D_FORCE_INLINE Vector3 Vector3::min(const Vector3 &vector1, const Vector3 &vector2)
     {
         Vector3 final;
-        __m128 a = _mm_loadu_ps((const float *)&vector1);
-        __m128 b = _mm_loadu_ps((const float *)&vector2);
-        _mm_storeu_ps((float *)&final, _mm_min_ps(a, b));
+        __m128 a = _mm_load_ps((const float *)&vector1);
+        __m128 b = _mm_load_ps((const float *)&vector2);
+        _mm_store_ps((float *)&final, _mm_min_ps(a, b));
         return final;
     }
 
@@ -430,9 +430,9 @@ namespace reactphysics3d
     RP3D_FORCE_INLINE Vector3 Vector3::max(const Vector3 &vector1, const Vector3 &vector2)
     {
         Vector3 final;
-        __m128 a = _mm_loadu_ps((const float *)&vector1);
-        __m128 b = _mm_loadu_ps((const float *)&vector2);
-        _mm_storeu_ps((float *)&final, _mm_max_ps(a, b));
+        __m128 a = _mm_load_ps((const float *)&vector1);
+        __m128 b = _mm_load_ps((const float *)&vector2);
+        _mm_store_ps((float *)&final, _mm_max_ps(a, b));
         return final;
     }
 
