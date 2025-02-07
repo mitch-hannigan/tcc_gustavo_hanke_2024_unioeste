@@ -21,8 +21,10 @@ void loger::add_iteraction(std::vector<rp3d::RigidBody *> &bodies)
     log.reserve(log.size() + sizeof(rp3d::decimal) * 7); // 7 elementos numericos
     for (auto &body : bodies)
     {
-        rp3d::Vector3 p = body->getTransform().getPosition();
-        rp3d::Quaternion o = body->getTransform().getOrientation();
+        const rp3d::Vector3 &p = body->getTransform().getPosition();
+        if(alignof(p)<16)
+            printf("not aligned\n");
+        const rp3d::Quaternion &o = body->getTransform().getOrientation();
         for (int i = 0; i < sizeof(rp3d::decimal)*3; i++)
             log.push_back(((char *)(&p))[i]);
         for (int i = 0; i < sizeof(o); i++)
