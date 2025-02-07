@@ -41,7 +41,7 @@ namespace reactphysics3d {
 /**
  * This class represents a 3D vector.
  */
-struct alignas(16) Vector3 {
+struct Vector3 {
 
     public:
 
