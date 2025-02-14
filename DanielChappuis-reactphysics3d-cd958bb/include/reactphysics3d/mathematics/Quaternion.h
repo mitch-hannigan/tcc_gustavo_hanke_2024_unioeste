@@ -1,27 +1,27 @@
 /********************************************************************************
-* ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
-* Copyright (c) 2010-2024 Daniel Chappuis                                       *
-*********************************************************************************
-*                                                                               *
-* This software is provided 'as-is', without any express or implied warranty.   *
-* In no event will the authors be held liable for any damages arising from the  *
-* use of this software.                                                         *
-*                                                                               *
-* Permission is granted to anyone to use this software for any purpose,         *
-* including commercial applications, and to alter it and redistribute it        *
-* freely, subject to the following restrictions:                                *
-*                                                                               *
-* 1. The origin of this software must not be misrepresented; you must not claim *
-*    that you wrote the original software. If you use this software in a        *
-*    product, an acknowledgment in the product documentation would be           *
-*    appreciated but is not required.                                           *
-*                                                                               *
-* 2. Altered source versions must be plainly marked as such, and must not be    *
-*    misrepresented as being the original software.                             *
-*                                                                               *
-* 3. This notice may not be removed or altered from any source distribution.    *
-*                                                                               *
-********************************************************************************/
+ * ReactPhysics3D physics library, http://www.reactphysics3d.com                 *
+ * Copyright (c) 2010-2024 Daniel Chappuis                                       *
+ *********************************************************************************
+ *                                                                               *
+ * This software is provided 'as-is', without any express or implied warranty.   *
+ * In no event will the authors be held liable for any damages arising from the  *
+ * use of this software.                                                         *
+ *                                                                               *
+ * Permission is granted to anyone to use this software for any purpose,         *
+ * including commercial applications, and to alter it and redistribute it        *
+ * freely, subject to the following restrictions:                                *
+ *                                                                               *
+ * 1. The origin of this software must not be misrepresented; you must not claim *
+ *    that you wrote the original software. If you use this software in a        *
+ *    product, an acknowledgment in the product documentation would be           *
+ *    appreciated but is not required.                                           *
+ *                                                                               *
+ * 2. Altered source versions must be plainly marked as such, and must not be    *
+ *    misrepresented as being the original software.                             *
+ *                                                                               *
+ * 3. This notice may not be removed or altered from any source distribution.    *
+ *                                                                               *
+ ********************************************************************************/
 
 #ifndef REACTPHYSICS3D_QUATERNION_H
 #define REACTPHYSICS3D_QUATERNION_H
@@ -29,22 +29,23 @@
 // Libraries
 #include <reactphysics3d/decimal.h>
 #include <reactphysics3d/mathematics/Vector3.h>
-
+#include <immintrin.h>
 /// ReactPhysics3D namespace
-namespace reactphysics3d {
+namespace reactphysics3d
+{
 
-// Declarations
-class Matrix3x3;
+    // Declarations
+    class Matrix3x3;
 
-// Class Quaternion
-/**
- * This class represents a quaternion. We use the notation :
- * q = (x*i, y*j, z*k, w) to represent a quaternion.
- */
-struct Quaternion {
+    // Class Quaternion
+    /**
+     * This class represents a quaternion. We use the notation :
+     * q = (x*i, y*j, z*k, w) to represent a quaternion.
+     */
+    struct Quaternion
+    {
 
-    public :
-
+    public:
         // -------------------- Attributes -------------------- //
 
         /// Component x
@@ -68,13 +69,13 @@ struct Quaternion {
         Quaternion(decimal newX, decimal newY, decimal newZ, decimal newW);
 
         /// Constructor with the component w and the vector v=(x y z)
-        Quaternion(decimal newW, const Vector3& v);
+        Quaternion(decimal newW, const Vector3 &v);
 
         /// Constructor with the component w and the vector v=(x y z)
-        Quaternion(const Vector3& v, decimal newW);
+        Quaternion(const Vector3 &v, decimal newW);
 
         /// Create a unit quaternion from a rotation matrix
-        Quaternion(const Matrix3x3& matrix);
+        Quaternion(const Matrix3x3 &matrix);
 
         /// Set all the values
         void setAllValues(decimal newX, decimal newY, decimal newZ, decimal newW);
@@ -119,13 +120,13 @@ struct Quaternion {
         static Quaternion fromEulerAngles(decimal angleX, decimal angleY, decimal angleZ);
 
         /// Return a quaternion constructed from Euler angles (in radians)
-        static Quaternion fromEulerAngles(const Vector3& eulerAngles);
+        static Quaternion fromEulerAngles(const Vector3 &eulerAngles);
 
         /// Dot product between two quaternions
-        decimal dot(const Quaternion& quaternion) const;
+        decimal dot(const Quaternion &quaternion) const;
 
         /// Compute the rotation angle (in radians) and the rotation axis
-        void getRotationAngleAxis(decimal& angle, Vector3& axis) const;
+        void getRotationAngleAxis(decimal &angle, Vector3 &axis) const;
 
         /// Return true if the values are not NAN OR INF
         bool isFinite() const;
@@ -137,258 +138,283 @@ struct Quaternion {
         bool isValid() const;
 
         /// Compute the spherical linear interpolation between two quaternions
-        static Quaternion slerp(const Quaternion& quaternion1, const Quaternion& quaternion2, decimal t);
+        static Quaternion slerp(const Quaternion &quaternion1, const Quaternion &quaternion2, decimal t);
 
         /// Overloaded operator for the addition
-        Quaternion operator+(const Quaternion& quaternion) const;
+        Quaternion operator+(const Quaternion &quaternion) const;
 
         /// Overloaded operator for the substraction
-        Quaternion operator-(const Quaternion& quaternion) const;
+        Quaternion operator-(const Quaternion &quaternion) const;
 
         /// Overloaded operator for addition with assignment
-        Quaternion& operator+=(const Quaternion& quaternion);
+        Quaternion &operator+=(const Quaternion &quaternion);
 
         /// Overloaded operator for substraction with assignment
-        Quaternion& operator-=(const Quaternion& quaternion);
+        Quaternion &operator-=(const Quaternion &quaternion);
 
         /// Overloaded operator for the multiplication with a constant
         Quaternion operator*(decimal nb) const;
 
         /// Overloaded operator for the multiplication
-        Quaternion operator*(const Quaternion& quaternion) const;
+        Quaternion operator*(const Quaternion &quaternion) const;
 
         /// Overloaded operator for the multiplication with a vector
-        Vector3 operator*(const Vector3& point) const;
+        Vector3 operator*(const Vector3 &point) const;
 
         /// Overloaded operator for equality condition
-        bool operator==(const Quaternion& quaternion) const;
+        bool operator==(const Quaternion &quaternion) const;
 
         /// Return the string representation
         std::string to_string() const;
 
     private:
-
         /// Initialize the quaternion using Euler angles
         void initWithEulerAngles(decimal angleX, decimal angleY, decimal angleZ);
-};
+    };
 
-// Constructor of the class
-RP3D_FORCE_INLINE Quaternion::Quaternion() : x(0.0), y(0.0), z(0.0), w(0.0) {
+    // Constructor of the class
+    RP3D_FORCE_INLINE Quaternion::Quaternion() : x(0.0), y(0.0), z(0.0), w(0.0)
+    {
+    }
 
-}
+    // Constructor with arguments
+    RP3D_FORCE_INLINE Quaternion::Quaternion(decimal newX, decimal newY, decimal newZ, decimal newW)
+        : x(newX), y(newY), z(newZ), w(newW)
+    {
+    }
 
-// Constructor with arguments
-RP3D_FORCE_INLINE Quaternion::Quaternion(decimal newX, decimal newY, decimal newZ, decimal newW)
-           :x(newX), y(newY), z(newZ), w(newW) {
+    // Constructor with the component w and the vector v=(x y z)
+    RP3D_FORCE_INLINE Quaternion::Quaternion(decimal newW, const Vector3 &v) : x(v.x), y(v.y), z(v.z), w(newW)
+    {
+    }
 
-}
+    // Constructor with the component w and the vector v=(x y z)
+    RP3D_FORCE_INLINE Quaternion::Quaternion(const Vector3 &v, decimal newW) : x(v.x), y(v.y), z(v.z), w(newW)
+    {
+    }
 
-// Constructor with the component w and the vector v=(x y z)
-RP3D_FORCE_INLINE Quaternion::Quaternion(decimal newW, const Vector3& v) : x(v.x), y(v.y), z(v.z), w(newW) {
+    // Set all the values
+    RP3D_FORCE_INLINE void Quaternion::setAllValues(decimal newX, decimal newY, decimal newZ, decimal newW)
+    {
+        x = newX;
+        y = newY;
+        z = newZ;
+        w = newW;
+    }
 
-}
+    // Set the quaternion to zero
+    RP3D_FORCE_INLINE void Quaternion::setToZero()
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+        w = 0;
+    }
 
-// Constructor with the component w and the vector v=(x y z)
-RP3D_FORCE_INLINE Quaternion::Quaternion(const Vector3& v, decimal newW) : x(v.x), y(v.y), z(v.z), w(newW) {
+    // Set to the identity quaternion
+    RP3D_FORCE_INLINE void Quaternion::setToIdentity()
+    {
+        x = 0;
+        y = 0;
+        z = 0;
+        w = 1;
+    }
 
-}
+    // Return the vector v=(x y z) of the quaternion
+    RP3D_FORCE_INLINE Vector3 Quaternion::getVectorV() const
+    {
 
-// Set all the values
-RP3D_FORCE_INLINE void Quaternion::setAllValues(decimal newX, decimal newY, decimal newZ, decimal newW) {
-    x = newX;
-    y = newY;
-    z = newZ;
-    w = newW;
-}
+        // Return the vector v
+        return Vector3(x, y, z);
+    }
 
-// Set the quaternion to zero
-RP3D_FORCE_INLINE void Quaternion::setToZero() {
-    x = 0;
-    y = 0;
-    z = 0;
-    w = 0;
-}
+    // Return the length of the quaternion (RP3D_FORCE_INLINE)
+    RP3D_FORCE_INLINE decimal Quaternion::length() const
+    {
+        return std::sqrt(lengthSquare());
+    }
 
-// Set to the identity quaternion
-RP3D_FORCE_INLINE void Quaternion::setToIdentity() {
-    x = 0;
-    y = 0;
-    z = 0;
-    w = 1;
-}
+    // Return the square of the length of the quaternion
+    RP3D_FORCE_INLINE decimal Quaternion::lengthSquare() const
+    {
+        __m128 a = _mm_load_ps(&x);
+        a = _mm_dp_ps(a, a, 0xf1);
+        return _mm_cvtss_f32(a);
+    }
 
-// Return the vector v=(x y z) of the quaternion
-RP3D_FORCE_INLINE Vector3 Quaternion::getVectorV() const {
+    // Normalize the quaternion
+    RP3D_FORCE_INLINE void Quaternion::normalize()
+    {
 
-    // Return the vector v
-    return Vector3(x, y, z);
-}
+        decimal l = length();
 
-// Return the length of the quaternion (RP3D_FORCE_INLINE)
-RP3D_FORCE_INLINE decimal Quaternion::length() const {
-    return std::sqrt(x*x + y*y + z*z + w*w);
-}
+        // Check if the length is not equal to zero
+        assert(l > MACHINE_EPSILON);
 
-// Return the square of the length of the quaternion
-RP3D_FORCE_INLINE decimal Quaternion::lengthSquare() const {
-    return x*x + y*y + z*z + w*w;
-}
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_set1_ps(l);
+        _mm_store_ps(&x, _mm_div_ps(a, b));
+    }
 
-// Normalize the quaternion
-RP3D_FORCE_INLINE void Quaternion::normalize() {
+    // Inverse the quaternion
+    RP3D_FORCE_INLINE void Quaternion::inverse()
+    {
 
-    decimal l = length();
+        // Use the conjugate of the current quaternion
+        __m128 a = _mm_load_ps(&x);
+        __m128 m = _mm_castsi128_ps(_mm_set_epi32(0x0, 0x80000000, 0x80000000, 0x80000000));
+        _mm_store_ps(&x, _mm_xor_ps(a, m));
+    }
 
-    // Check if the length is not equal to zero
-    assert (l > MACHINE_EPSILON);
+    // Return the unit quaternion
+    RP3D_FORCE_INLINE Quaternion Quaternion::getUnit() const
+    {
+        decimal lengthQuaternion = length();
 
-    x /= l;
-    y /= l;
-    z /= l;
-    w /= l;
-}
+        // Check if the length is not equal to zero
+        assert(lengthQuaternion > MACHINE_EPSILON);
 
-// Inverse the quaternion
-RP3D_FORCE_INLINE void Quaternion::inverse() {
+        // Compute and return the unit quaternion
+        return Quaternion(x / lengthQuaternion, y / lengthQuaternion,
+                          z / lengthQuaternion, w / lengthQuaternion);
+    }
 
-    // Use the conjugate of the current quaternion
-    x = -x;
-    y = -y;
-    z = -z;
-}
+    // Return the identity quaternion
+    RP3D_FORCE_INLINE Quaternion Quaternion::identity()
+    {
+        return Quaternion(0.0, 0.0, 0.0, 1.0);
+    }
 
-// Return the unit quaternion
-RP3D_FORCE_INLINE Quaternion Quaternion::getUnit() const {
-    decimal lengthQuaternion = length();
+    // Return the conjugate of the quaternion (RP3D_FORCE_INLINE)
+    RP3D_FORCE_INLINE Quaternion Quaternion::getConjugate() const
+    {
+        return Quaternion(-x, -y, -z, w);
+    }
 
-    // Check if the length is not equal to zero
-    assert (lengthQuaternion > MACHINE_EPSILON);
+    // Return the inverse of the quaternion (RP3D_FORCE_INLINE)
+    RP3D_FORCE_INLINE Quaternion Quaternion::getInverse() const
+    {
 
-    // Compute and return the unit quaternion
-    return Quaternion(x / lengthQuaternion, y / lengthQuaternion,
-                      z / lengthQuaternion, w / lengthQuaternion);
-}
+        // Return the conjugate quaternion
+        return Quaternion(-x, -y, -z, w);
+    }
 
-// Return the identity quaternion
-RP3D_FORCE_INLINE Quaternion Quaternion::identity() {
-    return Quaternion(0.0, 0.0, 0.0, 1.0);
-}
+    // Scalar product between two quaternions
+    RP3D_FORCE_INLINE decimal Quaternion::dot(const Quaternion &quaternion) const
+    {
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps(&quaternion.x);
+        return _mm_cvtss_f32(_mm_dp_ps(a, b, 0xf1));
+    }
 
-// Return the conjugate of the quaternion (RP3D_FORCE_INLINE)
-RP3D_FORCE_INLINE Quaternion Quaternion::getConjugate() const {
-    return Quaternion(-x, -y, -z, w);
-}
+    // Return true if the values are not NAN OR INF
+    RP3D_FORCE_INLINE bool Quaternion::isFinite() const
+    {
+        return std::isfinite(x) && std::isfinite(y) && std::isfinite(z) && std::isfinite(w);
+    }
 
-// Return the inverse of the quaternion (RP3D_FORCE_INLINE)
-RP3D_FORCE_INLINE Quaternion Quaternion::getInverse() const {
+    // Return true if it is a unit quaternion
+    RP3D_FORCE_INLINE bool Quaternion::isUnit() const
+    {
+        const decimal length = std::sqrt(x * x + y * y + z * z + w * w);
+        const decimal tolerance = 1e-5f;
+        return std::abs(length - decimal(1.0)) < tolerance;
+    }
 
-    // Return the conjugate quaternion
-    return Quaternion(-x, -y, -z, w);
-}
+    // Return true if it is a valid quaternion
+    RP3D_FORCE_INLINE bool Quaternion::isValid() const
+    {
+        return isFinite() && isUnit();
+    }
 
-// Scalar product between two quaternions
-RP3D_FORCE_INLINE decimal Quaternion::dot(const Quaternion& quaternion) const {
-    return (x*quaternion.x + y*quaternion.y + z*quaternion.z + w*quaternion.w);
-}
+    // Overloaded operator for the addition of two quaternions
+    RP3D_FORCE_INLINE Quaternion Quaternion::operator+(const Quaternion &quaternion) const
+    {
 
-// Return true if the values are not NAN OR INF
-RP3D_FORCE_INLINE bool Quaternion::isFinite() const {
-    return std::isfinite(x) && std::isfinite(y) && std::isfinite(z) && std::isfinite(w);
-}
+        // Return the result quaternion
+        return Quaternion(x + quaternion.x, y + quaternion.y, z + quaternion.z, w + quaternion.w);
+    }
 
-// Return true if it is a unit quaternion
-RP3D_FORCE_INLINE bool Quaternion::isUnit() const {
-    const decimal length = std::sqrt(x*x + y*y + z*z + w*w);
-    const decimal tolerance = 1e-5f;
-    return std::abs(length - decimal(1.0)) < tolerance;
-}
+    // Overloaded operator for the substraction of two quaternions
+    RP3D_FORCE_INLINE Quaternion Quaternion::operator-(const Quaternion &quaternion) const
+    {
 
-// Return true if it is a valid quaternion
-RP3D_FORCE_INLINE bool Quaternion::isValid() const {
-   return isFinite() && isUnit();
-}
+        // Return the result of the substraction
+        return Quaternion(x - quaternion.x, y - quaternion.y, z - quaternion.z, w - quaternion.w);
+    }
 
-// Overloaded operator for the addition of two quaternions
-RP3D_FORCE_INLINE Quaternion Quaternion::operator+(const Quaternion& quaternion) const {
+    // Overloaded operator for addition with assignment
+    RP3D_FORCE_INLINE Quaternion &Quaternion::operator+=(const Quaternion &quaternion)
+    {
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps(&quaternion.x);
+        _mm_store_ps(&x, _mm_add_ps(a, b));
+        return *this;
+    }
 
-    // Return the result quaternion
-    return Quaternion(x + quaternion.x, y + quaternion.y, z + quaternion.z, w + quaternion.w);
-}
+    // Overloaded operator for substraction with assignment
+    RP3D_FORCE_INLINE Quaternion &Quaternion::operator-=(const Quaternion &quaternion)
+    {
+        __m128 a = _mm_load_ps(&x);
+        __m128 b = _mm_load_ps(&quaternion.x);
+        _mm_store_ps(&x, _mm_add_ps(a, b));
+        return *this;
+    }
 
-// Overloaded operator for the substraction of two quaternions
-RP3D_FORCE_INLINE Quaternion Quaternion::operator-(const Quaternion& quaternion) const {
+    // Overloaded operator for the multiplication with a constant
+    RP3D_FORCE_INLINE Quaternion Quaternion::operator*(decimal nb) const
+    {
+        return Quaternion(nb * x, nb * y, nb * z, nb * w);
+    }
 
-    // Return the result of the substraction
-    return Quaternion(x - quaternion.x, y - quaternion.y, z - quaternion.z, w - quaternion.w);
-}
+    // Overloaded operator for the multiplication of two quaternions
+    RP3D_FORCE_INLINE Quaternion Quaternion::operator*(const Quaternion &quaternion) const
+    {
 
-// Overloaded operator for addition with assignment
-RP3D_FORCE_INLINE Quaternion& Quaternion::operator+=(const Quaternion& quaternion) {
-    x += quaternion.x;
-    y += quaternion.y;
-    z += quaternion.z;
-    w += quaternion.w;
-    return *this;
-}
+        /* The followin code is equivalent to this
+        return Quaternion(w * quaternion.w - getVectorV().dot(quaternion.getVectorV()),
+                              w * quaternion.getVectorV() + quaternion.w * getVectorV() +
+                              getVectorV().cross(quaternion.getVectorV()));
+        */
 
-// Overloaded operator for substraction with assignment
-RP3D_FORCE_INLINE Quaternion& Quaternion::operator-=(const Quaternion& quaternion) {
-    x -= quaternion.x;
-    y -= quaternion.y;
-    z -= quaternion.z;
-    w -= quaternion.w;
-    return *this;
-}
+        return Quaternion(w * quaternion.x + quaternion.w * x + y * quaternion.z - z * quaternion.y,
+                          w * quaternion.y + quaternion.w * y + z * quaternion.x - x * quaternion.z,
+                          w * quaternion.z + quaternion.w * z + x * quaternion.y - y * quaternion.x,
+                          w * quaternion.w - x * quaternion.x - y * quaternion.y - z * quaternion.z);
+    }
 
-// Overloaded operator for the multiplication with a constant
-RP3D_FORCE_INLINE Quaternion Quaternion::operator*(decimal nb) const {
-    return Quaternion(nb * x, nb * y, nb * z, nb * w);
-}
+    // Overloaded operator for the multiplication with a vector.
+    /// This methods rotates a point given the rotation of a quaternion.
+    RP3D_FORCE_INLINE Vector3 Quaternion::operator*(const Vector3 &point) const
+    {
 
-// Overloaded operator for the multiplication of two quaternions
-RP3D_FORCE_INLINE Quaternion Quaternion::operator*(const Quaternion& quaternion) const {
+        /* The following code is equivalent to this
+         * Quaternion p(point.x, point.y, point.z, 0.0);
+         * return (((*this) * p) * getConjugate()).getVectorV();
+         */
 
-    /* The followin code is equivalent to this
-    return Quaternion(w * quaternion.w - getVectorV().dot(quaternion.getVectorV()),
-                          w * quaternion.getVectorV() + quaternion.w * getVectorV() +
-                          getVectorV().cross(quaternion.getVectorV()));
-    */
+        const decimal prodX = w * point.x + y * point.z - z * point.y;
+        const decimal prodY = w * point.y + z * point.x - x * point.z;
+        const decimal prodZ = w * point.z + x * point.y - y * point.x;
+        const decimal prodW = -x * point.x - y * point.y - z * point.z;
+        return Vector3(w * prodX - prodY * z + prodZ * y - prodW * x,
+                       w * prodY - prodZ * x + prodX * z - prodW * y,
+                       w * prodZ - prodX * y + prodY * x - prodW * z);
+    }
 
-    return Quaternion(w * quaternion.x + quaternion.w * x + y * quaternion.z - z * quaternion.y,
-                      w * quaternion.y + quaternion.w * y + z * quaternion.x - x * quaternion.z,
-                      w * quaternion.z + quaternion.w * z + x * quaternion.y - y * quaternion.x,
-                      w * quaternion.w - x * quaternion.x - y * quaternion.y - z * quaternion.z);
-}
+    // Overloaded operator for equality condition
+    RP3D_FORCE_INLINE bool Quaternion::operator==(const Quaternion &quaternion) const
+    {
+        return (x == quaternion.x && y == quaternion.y &&
+                z == quaternion.z && w == quaternion.w);
+    }
 
-// Overloaded operator for the multiplication with a vector.
-/// This methods rotates a point given the rotation of a quaternion.
-RP3D_FORCE_INLINE Vector3 Quaternion::operator*(const Vector3& point) const {
-
-    /* The following code is equivalent to this
-     * Quaternion p(point.x, point.y, point.z, 0.0);
-     * return (((*this) * p) * getConjugate()).getVectorV();
-    */
-
-    const decimal prodX = w * point.x + y * point.z - z * point.y;
-    const decimal prodY = w * point.y + z * point.x - x * point.z;
-    const decimal prodZ = w * point.z + x * point.y - y * point.x;
-    const decimal prodW = -x * point.x - y * point.y - z * point.z;
-    return Vector3(w * prodX - prodY * z + prodZ * y - prodW * x,
-                   w * prodY - prodZ * x + prodX * z - prodW * y,
-                   w * prodZ - prodX * y + prodY * x - prodW * z);
-}
-
-// Overloaded operator for equality condition
-RP3D_FORCE_INLINE bool Quaternion::operator==(const Quaternion& quaternion) const {
-    return (x == quaternion.x && y == quaternion.y &&
-            z == quaternion.z && w == quaternion.w);
-}
-
-// Get the string representation
-RP3D_FORCE_INLINE std::string Quaternion::to_string() const {
-    return "Quaternion(" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + "," +
-            std::to_string(w) + ")";
-}
+    // Get the string representation
+    RP3D_FORCE_INLINE std::string Quaternion::to_string() const
+    {
+        return "Quaternion(" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(z) + "," +
+               std::to_string(w) + ")";
+    }
 
 }
 
