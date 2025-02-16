@@ -42,7 +42,7 @@ namespace reactphysics3d
      * This class represents a quaternion. We use the notation :
      * q = (x*i, y*j, z*k, w) to represent a quaternion.
      */
-    struct Quaternion
+    struct alignas(16) Quaternion
     {
 
     public:
