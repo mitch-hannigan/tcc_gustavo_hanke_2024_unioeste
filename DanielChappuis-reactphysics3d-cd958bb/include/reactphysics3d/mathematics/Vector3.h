@@ -352,13 +352,14 @@ namespace reactphysics3d
     // Overloaded operator for addition
     RP3D_FORCE_INLINE Vector3 operator+(const Vector3 &vector1, const Vector3 &vector2)
     {
-        return Vector3(vector1) += vector2;
+        return Vector3(vector1.x + vector2.x, vector1.y + vector2.y, vector1.z + vector2.z);
     }
 
     // Overloaded operator for substraction
     RP3D_FORCE_INLINE Vector3 operator-(const Vector3 &vector1, const Vector3 &vector2)
     {
-        return Vector3(vector1) -= vector2;
+        return Vector3(vector1.x - vector2.x, vector1.y - vector2.y, vector1.z - vector2.z);
+        ;
     }
 
     // Overloaded operator for the negative of a vector
@@ -370,14 +371,14 @@ namespace reactphysics3d
     // Overloaded operator for multiplication with a number
     RP3D_FORCE_INLINE Vector3 operator*(const Vector3 &vector, decimal number)
     {
-        return Vector3(vector) *= number;
+        return Vector3(vector.x * number, vector.y * number, vector.z * number);
     }
 
     // Overloaded operator for division by a number
     RP3D_FORCE_INLINE Vector3 operator/(const Vector3 &vector, decimal number)
     {
         assert(number > MACHINE_EPSILON);
-        return Vector3(vector) /= number;
+        return Vector3(vector.x / number, vector.y / number, vector.z / number);
     }
 
     // Overload operator for division between two vectors
@@ -386,12 +387,7 @@ namespace reactphysics3d
         assert(vector2.x > MACHINE_EPSILON);
         assert(vector2.y > MACHINE_EPSILON);
         assert(vector2.z > MACHINE_EPSILON);
-        Vector3 final;
-        __m128 a = _mm_load_ps((const float *)&vector1);
-        __m128 b = _mm_load_ps((const float *)&vector2);
-        _mm_store_ps((float *)&final, _mm_div_ps(a, b));
-        final.w = 0.0f;
-        return final;
+        return Vector3(vector1.x / vector2.x, vector1.y / vector2.y, vector1.z / vector2.z);
     }
 
     // Overloaded operator for multiplication with a number
@@ -403,11 +399,7 @@ namespace reactphysics3d
     // Overload operator for multiplication between two vectors
     RP3D_FORCE_INLINE Vector3 operator*(const Vector3 &vector1, const Vector3 &vector2)
     {
-        Vector3 final;
-        __m128 a = _mm_load_ps((const float *)&vector1);
-        __m128 b = _mm_load_ps((const float *)&vector2);
-        _mm_store_ps((float *)&final, _mm_mul_ps(a, b));
-        return final;
+        return Vector3(vector1.x * vector2.x, vector1.y * vector2.y, vector1.z * vector2.z);
     }
 
     // Overloaded less than operator for ordering to be used inside std::set for instance
