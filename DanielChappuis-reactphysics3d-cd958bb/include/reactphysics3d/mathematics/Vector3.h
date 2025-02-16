@@ -411,21 +411,13 @@ namespace reactphysics3d
     // Return a vector taking the minimum components of two vectors
     RP3D_FORCE_INLINE Vector3 Vector3::min(const Vector3 &vector1, const Vector3 &vector2)
     {
-        Vector3 final;
-        __m128 a = _mm_load_ps((const float *)&vector1);
-        __m128 b = _mm_load_ps((const float *)&vector2);
-        _mm_store_ps((float *)&final, _mm_min_ps(a, b));
-        return final;
+        return Vector3(std::min(vector1.x, vector2.x), std::min(vector1.y, vector2.y), std::min(vector1.z, vector2.z));
     }
 
     // Return a vector taking the maximum components of two vectors
     RP3D_FORCE_INLINE Vector3 Vector3::max(const Vector3 &vector1, const Vector3 &vector2)
     {
-        Vector3 final;
-        __m128 a = _mm_load_ps((const float *)&vector1);
-        __m128 b = _mm_load_ps((const float *)&vector2);
-        _mm_store_ps((float *)&final, _mm_max_ps(a, b));
-        return final;
+        return Vector3(std::max(vector1.x, vector2.x), std::max(vector1.y, vector2.y), std::max(vector1.z, vector2.z));
     }
 
     // Return the minimum value among the three components of a vector
