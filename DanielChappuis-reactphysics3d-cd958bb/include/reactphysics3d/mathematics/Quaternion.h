@@ -245,13 +245,10 @@ namespace reactphysics3d
     // Normalize the quaternion
     RP3D_FORCE_INLINE void Quaternion::normalize()
     {
-
         decimal l = length();
-
+        __m128 a = _mm_load_ps(&x);
         // Check if the length is not equal to zero
         assert(l > MACHINE_EPSILON);
-
-        __m128 a = _mm_load_ps(&x);
         __m128 b = _mm_set1_ps(l);
         _mm_store_ps(&x, _mm_div_ps(a, b));
     }
