@@ -7,7 +7,7 @@ string(STRIP ${RP3D_VERSION} RP3D_VERSION)
 
 # Project configuration
 project(ReactPhysics3D VERSION "${RP3D_VERSION}" LANGUAGES CXX)
- 
+find_package(OpenMP REQUIRED) 
 # In order to install libraries into correct locations on all platforms.
 include(GNUInstallDirs)
 
@@ -260,7 +260,9 @@ if(RP3D_COMPILE_LIBRARY)
 	# Creates an Alias Target, such that "ReactPhysics3D::reactphysics3d" can be used
 	# to refer to "reactphysics3d" in subsequent commands
 	add_library(ReactPhysics3D::reactphysics3d ALIAS reactphysics3d)
-
+	if(OpenMP_CXX_FOUND)
+    target_link_libraries(reactphysics3d PUBLIC OpenMP::OpenMP_CXX)
+endif()
 	# C++11 compiler features
 	target_compile_features(reactphysics3d PUBLIC cxx_std_17)
 	set_target_properties(reactphysics3d PROPERTIES CXX_EXTENSIONS OFF)

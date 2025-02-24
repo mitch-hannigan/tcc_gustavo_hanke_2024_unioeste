@@ -5,6 +5,7 @@ endif()
 
 find_package(ReactPhysics3D REQUIRED)
 project(tcc_gustavo_hanke VERSION 0.1.0 LANGUAGES C CXX)
+find_package(OpenMP REQUIRED) 
 add_executable(bm_01 bm_01.cpp utils.cpp loger.cpp)
 target_link_libraries(bm_01 PUBLIC ReactPhysics3D::ReactPhysics3D)
 add_executable(tester tester.cpp)
